@@ -10,9 +10,9 @@
 
 
 class Silo : public Building {
- public:
+public:
 
-  // Constructors 
+  // Constructors
 
   Silo() {}
 
@@ -41,20 +41,25 @@ class Silo : public Building {
     vec3 *verts = new vec3[NUM_SEGMENTS+1];
 
     verts[0] = pos;
-    
+
     for (int i=0; i<NUM_SEGMENTS; i++) {
       float theta = (i/(float)(NUM_SEGMENTS-1)) * M_PI;
       verts[i+1] = vec3( pos.x + 0.04 * cos(theta), pos.y + 0.04 * sin(theta), 0 );
     }
 
-    gpuProgram->drawVertices( verts, NUM_SEGMENTS+1, GL_TRIANGLE_FAN, vec3(1,1,1) );
+    vec3 colorVector = canShoot() ?
+      vec3(0.204, 0.659, 0.325)
+      :
+      vec3(0.917, 0.263, 0.208);
+
+    gpuProgram->drawVertices( verts, NUM_SEGMENTS+1, GL_TRIANGLE_FAN, colorVector );
 
     delete [] verts;
   }
 
- private:
+private:
   int roundsLeft;
 };
-  
+
 
 #endif
