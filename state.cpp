@@ -39,6 +39,20 @@ void State::draw()
 }
 
 
+void State::speedUp()
+
+{
+  if (playerSpeed <= 20)
+    playerSpeed += incr;
+}
+
+void State::speedDown()
+
+{
+  if (playerSpeed > 1)
+    playerSpeed -= incr;
+}
+
 // Update the state of the world after some time interval, deltaT
 //
 // CHANGE ALL OF THIS FUNCTION
@@ -141,11 +155,10 @@ void State::updateState( float deltaT )
 void State::fireMissile( int siloIndex, float x, float y )
 
 {
-
-  const float speed = 0.3;
     
   if (siloIndex < silos.size() && silos[siloIndex].canShoot()) {
 
+    double speed = playerSpeed * 0.1;
     silos[siloIndex].decrMissiles();
 
     // CHANGE THIS
@@ -168,6 +181,7 @@ void State::setupWorld()
   // Keep track of the time
 
   currentTime = 0;
+  playerSpeed = 5;
 
   timeOfIncomingFlight = 6;	// 6 seconds for incoming missile to arrive
 

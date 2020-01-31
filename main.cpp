@@ -45,6 +45,14 @@ void keyCallback( GLFWwindow* window, int key, int scancode, int action, int mod
     case GLFW_KEY_ESCAPE:	// ESC closes window
       glfwSetWindowShouldClose( window, GL_TRUE );
       break;
+
+    case GLFW_KEY_UP:
+      state->speedUp();
+      break;
+
+    case GLFW_KEY_DOWN:
+      state->speedDown();
+      break;
     }
 }
 

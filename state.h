@@ -19,6 +19,8 @@ class State {
 
  public:
 
+  const int incr = 1;
+
   State( float l, float r, float b, float t ) {
 
     gpuProgram = new GPUProgram( "a1.vert", "a1.frag" );
@@ -29,6 +31,8 @@ class State {
   }
 
   void setupWorld();
+  void speedUp();
+  void speedDown();
   void draw();
   void fireMissile( int siloIndex, float x, float y );
   void updateState( float deltaT );
@@ -41,7 +45,8 @@ class State {
   mat4  M;                      // world-to-window transform
   float currentTime;            // current game time
   float timeOfIncomingFlight;   // time taken for incoming missile to reach bottom
-
+  int playerSpeed;
+  
   seq<Silo> silos;
   seq<City> cities;
   seq<Missile> missilesIn;
