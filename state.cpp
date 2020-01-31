@@ -9,7 +9,7 @@
 // Draw each of the objects in the world
 
 
-void State::draw() 
+void State::draw()
 
 {
   int i;
@@ -19,7 +19,7 @@ void State::draw()
   glUniformMatrix4fv( glGetUniformLocation( gpuProgram->id(), "M"), 1, GL_TRUE, &M[0][0] );
 
   silos[0].draw( gpuProgram );
-  
+
   for (i=0; i<silos.size(); i++)
     silos[i].draw( gpuProgram );
 
@@ -74,18 +74,18 @@ void State::updateState( float deltaT )
 
   float boundary = 0.995 - (currentTime/100000);
 
-  if (randIn01() > boundary) {	// New missile 
+  if (randIn01() > boundary) {	// New missile
 
     vec3 startPos = vec3(randIn01(), worldTop, 0);
     const float speed = 0.05;
-    
+
     missilesIn.add( Missile( startPos, // source
 			     speed * (vec3(randIn01(), -0.1, 0) - startPos),         // velocity
 			     0,                              // destination y
 			     vec3( 1,1,0 ) ) );             // colour
   }
 
-   for (i = 0; i < missilesIn.size(); i++) {
+  for (i = 0; i < missilesIn.size(); i++) {
     Missile currMissile = missilesIn[i];
     if (currMissile.hasReachedDestination()) {
       explosions.add(Circle(currMissile.position(), 0.1, 0.03, vec3(1, 0, 0)));
@@ -155,7 +155,7 @@ void State::updateState( float deltaT )
 void State::fireMissile( int siloIndex, float x, float y )
 
 {
-    
+
   if (siloIndex < silos.size() && silos[siloIndex].canShoot()) {
 
     double speed = playerSpeed * 0.1;
