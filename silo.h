@@ -17,8 +17,8 @@ public:
   Silo() {}
 
   Silo( vec3 pos ) : Building( pos ) {
-
-    roundsLeft = 15;
+    maxRounds = 15;
+    roundsLeft = maxRounds;
   }
 
   bool canShoot() {
@@ -47,10 +47,16 @@ public:
       verts[i+1] = vec3( pos.x + 0.04 * cos(theta), pos.y + 0.04 * sin(theta), 0 );
     }
 
-    vec3 colorVector = canShoot() ?
-      vec3(0.204, 0.659, 0.325)
-      :
-      vec3(0.917, 0.263, 0.208);
+    vec3 colorVector;
+    float percentRounds = (float) roundsLeft / maxRounds;
+
+    if (percentRounds > 0.5) { // above half ammo
+      colorVector = vec3(0.204, 0.659, 0.325); // green
+    } else if (percentRounds == 0) { // out of ammo
+      colorVector = vec3(0.917, 0.263, 0.208); // red
+    } else { // getting low on ammo
+      colorVector = vec3(0.984, 0.737, 0.02); // yellow
+    }
 
     gpuProgram->drawVertices( verts, NUM_SEGMENTS+1, GL_TRIANGLE_FAN, colorVector );
 
@@ -59,6 +65,7 @@ public:
 
 private:
   int roundsLeft;
+  int maxRounds;
 };
 
 
